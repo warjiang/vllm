@@ -152,6 +152,30 @@ async def build_async_engine_client_from_engine_args(
 
     Returns the Client or None if the creation failed.
     """
+    
+    # Autodetect if we can deploy with the VLLM_USE_V1 engine.
+    if not envs.is_set("VLLM_USE_V1") and envs.VLLM_DEFAULT_TO_V1:
+        engine_config = engine_args.create_engine_config(
+            UsageContext.OPENAI_API_SERVER)
+        if engine_config.supports_v1():
+            from vllm.v1.engine.async_llm import AsyncLLM
+            logger.warning(
+                "Your deployment supports VLLM_V1. Enabling the VLLM_V1 Engine. "
+                "If you encounter issues, you can disable by setting VLLM_USE_V1=0"
+            )    
+
+            async_llm: Optional[AsyncLLM] = None
+            try:
+                async_llm = AsyncLLM.from_engine_args(
+                    engine_args=engine_args, # NOTE: Ignored if we pass engine_config.
+                    engine_config=engine_config,
+                    usage_context=UsageContext.OPENAI_API_SERVER)
+                yield async_llm
+            finally:
+                if async_llm:
+                    async_llm.shutdown()
+
+            return
 
     # AsyncLLMEngine.
     if (MQLLMEngineClient.is_unsupported_config(engine_args)
