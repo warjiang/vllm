@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/alitari/.oh-my-zsh"
+export ZSH="/home/devuser/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -99,3 +99,22 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 source ~/.purepower
+
+export proxy_client="192.168.20.3"
+export proxy_port="7890"
+function proxy() {
+    ip=${proxy_client}
+    port=${proxy_port}
+    if [ "$1" = "on" ]; then
+        export https_proxy=http://$proxy_client:$proxy_port
+        export http_proxy=http://$proxy_client:$proxy_port
+        export all_proxy=http://$proxy_client:$proxy_port
+        echo proxy on
+    else
+        unset https_proxy
+        unset http_proxy
+        unset all_proxy
+        echo proxy off
+    fi
+}
+export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
