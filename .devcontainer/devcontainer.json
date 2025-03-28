@@ -9,7 +9,9 @@
             "extensions": [
                 // Python development
                 "ms-python.python",
-                "charliermarsh.ruff"
+                "charliermarsh.ruff",
+                // Git
+                "eamodio.gitlens"
             ]
         }
     },
