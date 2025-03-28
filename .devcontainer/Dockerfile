@@ -14,4 +14,5 @@ ARG HOST_GID=1000
 RUN groupadd -g $HOST_GID devuser && \
     useradd -m -u $HOST_UID -g $HOST_GID -s /bin/zsh devuser
 
-COPY setup.sh /setup.sh
+COPY setup.sh /tmp/setup.sh
+ADD .zshrc /tmp/.zshrc
