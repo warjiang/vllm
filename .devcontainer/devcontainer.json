@@ -1,0 +1,22 @@
+{
+    "name": "vllm",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "remoteUser": "devuser",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                // Python development
+                "ms-python.python",
+                "charliermarsh.ruff"
+            ]
+        }
+    },
+    "forwardPorts": [],
+    "runArgs": [
+        "--gpus",
+        "all"
+    ],
+    "postCreateCommand": "bash /setup.sh"
+}
