@@ -12,7 +12,8 @@ RUN sed -i s/archive.ubuntu.com/mirrors.ivolces.com/g /etc/apt/sources.list && \
 ARG HOST_UID=1000
 ARG HOST_GID=1000
 RUN groupadd -g $HOST_GID devuser && \
-    useradd -m -u $HOST_UID -g $HOST_GID -s /bin/zsh devuser
+    useradd -m -u $HOST_UID -g $HOST_GID -s /bin/zsh devuser && \
+    echo 'devuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 COPY setup.sh /tmp/setup.sh
 ADD .zshrc /tmp/.zshrc
