@@ -20,5 +20,5 @@
         "--gpus",
         "all"
     ],
-    "postCreateCommand": "bash /setup.sh"
+    "postCreateCommand": "bash /tmp/setup.sh"
 }
